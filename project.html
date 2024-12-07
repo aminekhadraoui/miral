@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxurious HTML Generator</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(145deg, #2a2a72, #009ffd);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        textarea, button {
+            font-size: 1rem;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button {
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(145deg, #ff9f1a, #f67280);
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background: rgba(0, 0, 0, 0.7);
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            textarea, button {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Luxurious HTML Generator</h1>
+        <p>Enter your HTML with <code>&lt;repeat it="X"&gt;</code> or <code>&lt;for it="X"&gt;</code> tags:</p>
+        <textarea id="inputHTML" placeholder="Enter HTML with <repeat it='X'> or <for it='X'></endFor>"></textarea>
+        <button onclick="generateHTML()">Generate Output</button>
+        <div class="output" id="outputHTML"></div>
+        <button onclick="downloadFile()">Download Output</button>
+    </div>
+
+    <script>
+        // Function to extract inner HTML between any tag
+        function extractInnerHTML(inputHTML, tagName) {
+            const startTag = `<${tagName} it="`;
+            const endTag = `</${tagName}>`;
+
+            const startPos = inputHTML.indexOf('>', inputHTML.indexOf(startTag)) + 1;
+            const endPos = inputHTML.indexOf(endTag);
+
+            if (startPos > 0 && endPos > startPos) {
+                return inputHTML.slice(startPos, endPos).trim();
+            }
+            return ''; // Return empty string if the tags are not valid
+        }
+
+        // Function to generate the repeated HTML output
+        function generateHTML() {
+            const inputHTML = document.getElementById('inputHTML').value;
+
+            // Check if <repeat> or <for> tags exist
+            if (inputHTML.includes('<repeat it="')) {
+                processTag(inputHTML, 'repeat');
+            } else if (inputHTML.includes('<for it="')) {
+                processTag(inputHTML, 'for');
+            } else {
+                alert('No <repeat> or <for> tag found in the input.');
+            }
+        }
+
+        // Helper function to process the <repeat> or <for> tag
+        function processTag(inputHTML, tagName) {
+            const tagPos = inputHTML.indexOf(`<${tagName} it="`);
+
+            if (tagPos !== -1) {
+                // Extract the repeat/for count
+                const countStart = inputHTML.indexOf('"', tagPos) + 1;
+                const countEnd = inputHTML.indexOf('"', countStart);
+                const repeatCount = parseInt(inputHTML.slice(countStart, countEnd), 10);
+
+                if (isNaN(repeatCount)) {
+                    alert(`Invalid "it" value in <${tagName}> tag.`);
+                    return;
+                }
+
+                // Extract inner HTML
+                const innerHTML = extractInnerHTML(inputHTML, tagName);
+
+                // Generate the output HTML by repeating the innerHTML
+                let outputHTML = '';
+                for (let i = 0; i < repeatCount; i++) {
+                    outputHTML += innerHTML + '\n';
+                }
+                  
+                // Display the output HTML in the div
+                document.getElementById('outputHTML').innerText = outputHTML;
+            } else {
+                alert(`No <${tagName}> tag found in the input.`);
+            }
+        }
+
+        // Function to download the output as an HTML file
+        function downloadFile() {
+            const outputHTML = document.getElementById('outputHTML').innerText;
+            const blob = new Blob([outputHTML], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'output.html';
+            link.click();
+        }
+
+        // Ensure functions are globally accessible
+        window.generateHTML = generateHTML;
+        window.downloadFile = downloadFile;
+    </script>
+</body>
+</html>
