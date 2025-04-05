@@ -1,114 +1,75 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxurious HTML Generator</title>
+    <title>UltraHTML: Dynamic HTML Generator</title>
     <style>
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background: linear-gradient(145deg, #2a2a72, #009ffd);
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            max-width: 600px;
+        /* (Keep your existing CSS styles here, they are awesome!) */
+        body {font-family: 'Roboto', Arial, sans-serif;background: linear-gradient(145deg, #2a2a72, #009ffd);color: #fff;margin: 0;padding: 0;display: flex;justify-content: center;align-items: center;height: 100vh;overflow: hidden;}.container {text-align: center;padding: 20px;background: rgba(255, 255, 255, 0.1);box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);border-radius: 15px;backdrop-filter: blur(5px);max-width: 600px;width: 100%;}h1 {font-size: 2.5rem;margin-bottom: 20px;text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);}textarea, button {font-size: 1rem;width: 100%;padding: 15px;margin-bottom: 15px;border: none;border-radius: 8px;outline: none;transition: transform 0.3s ease-in-out;}textarea {height: 120px;resize: none;background: rgba(252, 246, 246, 0.2);color: #fff;box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);}button {cursor: pointer;color: #fff;background: linear-gradient(145deg, #ff9f1a, #f67280);font-weight: bold;text-transform: uppercase;box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);}button:hover {transform: scale(1.1);box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);}button:active {transform: scale(0.95);box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);}::placeholder{color: rgb(221, 221, 221);}.output {margin-top: 20px;white-space: pre-wrap;background: rgba(0, 0, 0, 0.7);color: #0f0;padding: 15px;border-radius: 8px;overflow-x: auto;}@media (max-width: 600px) {h1 {font-size: 2rem;}textarea, button {font-size: 0.9rem;padding: 10px;}}
+        /* Textarea styling */
+        textarea {
             width: 100%;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-        }
-
-        textarea, button {
-            font-size: 1rem;
-            width: 100%;
+            height: 150px; /* Increased height for better code editing */
             padding: 15px;
-            margin-bottom: 15px;
+            font-size: 1rem;
             border: none;
             border-radius: 8px;
-            outline: none;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        textarea {
-            height: 120px;
-            resize: none;
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            resize: vertical; /* Allow vertical resizing */
+            margin-bottom: 20px;
         }
 
-        button {
-            cursor: pointer;
-            color: #fff;
-            background: linear-gradient(145deg, #ff9f1a, #f67280);
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        button:active {
-            transform: scale(0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
+        /* Output container styling */
         .output {
-            margin-top: 20px;
+            width: 100%; /* Full width */
+            height: 300px; /* Fixed height for the result box */
             white-space: pre-wrap;
             background: rgba(0, 0, 0, 0.7);
             color: #0f0;
             padding: 15px;
             border-radius: 8px;
             overflow-x: auto;
+            overflow-y: auto; /* Enable vertical scrolling */
+            margin-bottom: 20px; /* Add space below the output */
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2rem;
-            }
+        /* Ensure the container layout is flexible */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align items to the top */
+            height: 90vh; /* Set a height for the container */
+            padding: 20px;
+            max-width: 800px; /* Limit the maximum width for better readability */
+            width: 100%;
+        }
 
-            textarea, button {
-                font-size: 0.9rem;
-                padding: 10px;
-            }
+        /* Style for the Download button */
+        #downloadButton {
+            margin-top: 20px; /* Add space above the button */
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Luxurious HTML Generator</h1>
-        <p>Enter your HTML with <code>&lt;repeat it="X"&gt;</code> or <code>&lt;for it="X"&gt;</code> tags:</p>
-        <textarea id="inputHTML" placeholder="Enter HTML with <repeat it='X'> or <for it='X'></endFor>"></textarea>
+        <h1>UltraHTML: Dynamic HTML Generator</h1>
+        <p>Use <code>&lt;repeat it="X"&gt;</code>, <code>&lt;for it="start:end:step"&gt;</code>, <code>&lt;if condition="X &gt; Y"&gt;</code>, or <code>&lt;while condition="X &lt; Y"&gt;</code> tags:</p>
+        <textarea id="inputHTML" placeholder="Enter HTML with <repeat>, <for>, <if>, or <while> tags"></textarea>
         <button onclick="generateHTML()">Generate Output</button>
         <div class="output" id="outputHTML"></div>
-        <button onclick="downloadFile()">Download Output</button>
+        <button id="downloadButton" onclick="downloadFile()">Download Output</button>
     </div>
 
     <script>
         // Function to extract inner HTML between any tag
         function extractInnerHTML(inputHTML, tagName) {
-            const startTag = `<${tagName} it="`;
+            const startTag = `<${tagName}`;
             const endTag = `</${tagName}>`;
 
             const startPos = inputHTML.indexOf('>', inputHTML.indexOf(startTag)) + 1;
@@ -120,49 +81,62 @@
             return ''; // Return empty string if the tags are not valid
         }
 
-        // Function to generate the repeated HTML output
-        function generateHTML() {
-            const inputHTML = document.getElementById('inputHTML').value;
-
-            // Check if <repeat> or <for> tags exist
-            if (inputHTML.includes('<repeat it="')) {
-                processTag(inputHTML, 'repeat');
-            } else if (inputHTML.includes('<for it="')) {
-                processTag(inputHTML, 'for');
-            } else {
-                alert('No <repeat> or <for> tag found in the input.');
+        // Function to evaluate conditions
+        function evaluateCondition(condition, variables = {}) {
+            try {
+                // Create a function with the variables as parameters
+                const func = new Function(...Object.keys(variables), `return ${condition};`);
+                return func(...Object.values(variables));
+            } catch (e) {
+                console.error(`Invalid condition: ${condition}`);
+                return false;
             }
         }
 
-        // Helper function to process the <repeat> or <for> tag
-        function processTag(inputHTML, tagName) {
-            const tagPos = inputHTML.indexOf(`<${tagName} it="`);
+        // Function to generate the dynamic HTML output
+        function generateHTML() {
+            const inputHTML = document.getElementById('inputHTML').value;
+            let outputHTML = inputHTML;
 
-            if (tagPos !== -1) {
-                // Extract the repeat/for count
-                const countStart = inputHTML.indexOf('"', tagPos) + 1;
-                const countEnd = inputHTML.indexOf('"', countStart);
-                const repeatCount = parseInt(inputHTML.slice(countStart, countEnd), 10);
-
-                if (isNaN(repeatCount)) {
-                    alert(`Invalid "it" value in <${tagName}> tag.`);
-                    return;
+            // Process <repeat> tags
+            outputHTML = outputHTML.replace(/<repeat it="(\d+)"\s*>(.*?)<\/repeat>/gs, (match, count, innerHTML) => {
+                let result = '';
+                for (let i = 0; i < parseInt(count, 10); i++) {
+                    result += innerHTML + '\n';
                 }
+                return result;
+            });
 
-                // Extract inner HTML
-                const innerHTML = extractInnerHTML(inputHTML, tagName);
-
-                // Generate the output HTML by repeating the innerHTML
-                let outputHTML = '';
-                for (let i = 0; i < repeatCount; i++) {
-                    outputHTML += innerHTML + '\n';
+            // Process <for> tags
+            outputHTML = outputHTML.replace(/<for it="(\d+):(\d+):(\d+)"\s*>(.*?)<\/for>/gs, (match, start, end, step, innerHTML) => {
+                let result = '';
+                for (let i = parseInt(start, 10); i <= parseInt(end, 10); i += parseInt(step, 10)) {
+                    result += innerHTML.replace(/{{i}}/g, i) + '\n';
                 }
-                  
-                // Display the output HTML in the div
-                document.getElementById('outputHTML').innerText = outputHTML;
-            } else {
-                alert(`No <${tagName}> tag found in the input.`);
-            }
+                return result;
+            });
+
+            // Process <if> tags
+            outputHTML = outputHTML.replace(/<if condition="(.*?)"\s*>(.*?)<\/if>/gs, (match, condition, innerHTML) => {
+                return evaluateCondition(condition) ? innerHTML : '';
+            });
+
+            // Process <while> tags
+            outputHTML = outputHTML.replace(/<while condition="(.*?)"\s*>(.*?)<\/while>/gs, (match, condition, innerHTML) => {
+                let result = '';
+                let counter = 0; // To prevent infinite loops
+                let variables = { x: 0 }; // Initialize variables (e.g., x)
+
+                while (evaluateCondition(condition, variables) && counter < 1000) { // Max 1000 iterations
+                    result += innerHTML.replace(/{{x}}/g, variables.x) + '\n';
+                    variables.x++; // Update the variable (e.g., increment x)
+                    counter++;
+                }
+                return result;
+            });
+
+            // Display the output HTML in the div
+            document.getElementById('outputHTML').innerText = outputHTML;
         }
 
         // Function to download the output as an HTML file
